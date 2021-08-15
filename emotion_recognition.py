@@ -7,7 +7,7 @@ import numpy as np
 
 # parameters for loading data and images
 detection_model_path = 'haarcascade_files/haarcascade_frontalface_default.xml'
-emotion_model_path = 'models/_mini_XCEPTION.106-0.65.hdf5'
+emotion_model_path = 'haarcascade_files/_mini_XCEPTION.102-0.66.hdf5'
 
 # hyper-parameters for bounding boxes shape
 # loading models
@@ -19,7 +19,7 @@ EMOTIONS = ["angry" ,"disgust","scared", "happy", "sad", "surprised",
 
 # starting video streaming
 cv2.namedWindow('your_face')
-camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(1)
 while True:
     frame = camera.read()[1]
     #reading the frame
