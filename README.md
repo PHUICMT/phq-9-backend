@@ -1,17 +1,19 @@
-[Linux]
-python3 -m virtualenv .env #Create virtualenv
+# :fa-linux: [Linux] :fa-linux: 
+**python3 -m virtualenv .env** #create virtualenv
 
-source .env/bin/activate #activate env
+**source .env/bin/activate** #activate env
 
-python3 -m pip install -r requirements.txt #install requirements pack
+**python3 -m pip install -r requirements.txt** #install requirements pack
 
-deactivate #deactivate
+**deactivate** #deactivate
 
-[Windows]
-python -m virtualenv .env #Create virtualenv
+------------
 
-.\.env\Scripts\activate #activate env
+# :fa-windows: [Windows] :fa-windows:
+**python -m virtualenv .env** #Create virtualenv
 
-python -m pip install -r requirements.txt #install requirements pack
+**..env\Scripts\activate** #activate env
 
-deactivate #deactivate
+**python -m pip install -r requirements.txt** #install requirements pack
+
+**deactivate** #deactivate
