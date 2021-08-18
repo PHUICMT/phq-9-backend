@@ -1,6 +1,7 @@
 # [Linux] 
+```bash
 **python3 -m virtualenv .env** #create virtualenv
-
+```
 **source .env/bin/activate** #activate env
 
 **python3 -m pip install -r requirements.txt** #install requirements pack
