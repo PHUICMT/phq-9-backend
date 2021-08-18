@@ -1,4 +1,4 @@
-# :fa-linux: [Linux] :fa-linux: 
+# [Linux] 
 **python3 -m virtualenv .env** #create virtualenv
 
 **source .env/bin/activate** #activate env
@@ -9,7 +9,7 @@
 
 ------------
 
-# :fa-windows: [Windows] :fa-windows:
+# [Windows] 
 **python -m virtualenv .env** #Create virtualenv
 
 **..env\Scripts\activate** #activate env
