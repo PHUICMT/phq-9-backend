@@ -1,20 +1,28 @@
 # [Linux] 
 ```bash
-**python3 -m virtualenv .env** #create virtualenv
+python3 -m virtualenv .env #create virtualenv
 ```
-**source .env/bin/activate** #activate env
-
-**python3 -m pip install -r requirements.txt** #install requirements pack
-
-**deactivate** #deactivate
-
+```bash
+source .env/bin/activate #activate env
+```
+```bash
+python3 -m pip install -r requirements.txt #install requirements pack
+```
+```bash
+deactivate #deactivate
+```
 ------------
 
 # [Windows] 
-**python -m virtualenv .env** #Create virtualenv
-
-**..env\Scripts\activate** #activate env
-
-**python -m pip install -r requirements.txt** #install requirements pack
-
-**deactivate** #deactivate
+```bash
+python -m virtualenv .env #Create virtualenv
+```
+```bash
+..env\Scripts\activate #activate env
+```
+```bash
+python -m pip install -r requirements.txt #install requirements pack
+```
+```bash
+deactivate #deactivate
+```
