@@ -13,8 +13,7 @@ emotion_model_path = 'haarcascade_files/_mini_XCEPTION.102-0.66.hdf5'
 # loading models
 face_detection = cv2.CascadeClassifier(detection_model_path)
 emotion_classifier = load_model(emotion_model_path, compile=False)
-EMOTIONS = ["angry" ,"disgust","scared", "happy", "sad", "surprised",
- "neutral"]
+EMOTIONS = ["angry" ,"disgust","scared", "happy", "sad", "surprised", "neutral"]
 
 
 # starting video streaming
@@ -59,10 +58,9 @@ while True:
             cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
             cv2.rectangle(frameClone, (fX, fY), (fX + fW, fY + fH),(0, 0, 255), 2)
 
-    cv2.imshow('your_face', frameClone)
-    cv2.imshow("Probabilities", canvas)
+    # cv2.imshow('your_face', frameClone)
+    # cv2.imshow("Probabilities", canvas)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
 camera.release()
-cv2.destroyAllWindows()
