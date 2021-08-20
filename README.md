@@ -18,7 +18,7 @@ deactivate #deactivate
 python -m virtualenv .env #Create virtualenv
 ```
 ```bash
-..env\Scripts\activate #activate env
+.env\Scripts\activate #activate env
 ```
 ```bash
 python -m pip install -r requirements.txt #install requirements pack
