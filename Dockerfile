@@ -9,6 +9,4 @@ COPY requirements.txt requirements.txt
 RUN pip install --default-timeout=1000 -r requirements.txt
 
 COPY . .
-
-EXPOSE 3000
 CMD [ "python", "./app/app.py"]
