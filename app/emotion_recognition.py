@@ -54,5 +54,5 @@ def run_predict(video_path):
     camera.release()
     cv2.destroyAllWindows()
     # print(total_emotion)
-    os.remove(video_path)
+    # os.remove(video_path)
     return total_emotion
