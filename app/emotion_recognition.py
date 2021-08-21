@@ -47,7 +47,7 @@ def run_predict(video_path):
                 preds = emotion_classifier.predict(roi)[0]
                 label = EMOTIONS[preds.argmax()]
                 total_emotion[label] += 1
-                print('emotion : '+label)
+                # print('emotion : '+label)
         else :
             break
 
