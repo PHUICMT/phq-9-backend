@@ -6,12 +6,13 @@ app = Flask(__name__)
 
 @app.route('/upload-recorded-webcam', methods=['POST'])
 def upload_webcam_file():
+    result = {}
     uploaded_file = request.files['blob']
     if uploaded_file.filename != '':
         uploaded_file.filename = 'webcam.webm'
         save_file(uploaded_file)
-        run_predict('./app/temp_video/webcam.webm')
-    return 'Video accepted'
+        result = run_predict('./app/temp_video/webcam.webm')
+    return jsonify({"response":result}), 200
 
 @app.route('/upload-recorded-screen', methods=['POST'])
 def upload_screen_file():
@@ -19,8 +20,7 @@ def upload_screen_file():
     if uploaded_file.filename != '':
         uploaded_file.filename = 'screen.webm'
         save_file(uploaded_file)
-        run_predict('./app/temp_video/screen.webm')
-    return 'Video accepted'
+    return 'Screen accepted'
 
 @app.route('/check', methods=['GET', 'POST'])
 def check_flask():
