@@ -4,7 +4,6 @@ import imutils
 import cv2
 from keras.models import load_model
 import numpy as np
-import os
 
 def run_predict(video_path):
 
@@ -28,7 +27,6 @@ def run_predict(video_path):
     camera = cv2.VideoCapture(video_path)
     while(camera.isOpened()):
         ret, frame = camera.read()
-
         if ret == True:
             frame = imutils.resize(frame,width=400)
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -47,12 +45,9 @@ def run_predict(video_path):
                 preds = emotion_classifier.predict(roi)[0]
                 label = EMOTIONS[preds.argmax()]
                 total_emotion[label] += 1
-                # print('emotion : '+label)
         else :
             break
 
     camera.release()
     cv2.destroyAllWindows()
-    # print(total_emotion)
-    # os.remove(video_path)
     return total_emotion
