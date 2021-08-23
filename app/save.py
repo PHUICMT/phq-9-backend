@@ -3,7 +3,7 @@ import uuid
 from datetime import datetime
 import mysql.connector
 
-UPLOAD_FOLDER = './app/temp_video'
+UPLOAD_FOLDER = './app/video_storage'
 video_uuid = str(uuid.uuid4())
 mydb = mysql.connector.connect(
     host="db",
@@ -16,12 +16,11 @@ cursor = mydb.cursor()
 now = datetime.now()
 current_time = now.strftime('%Y-%m-%d %H:%M:%S')
 
-def save_file(file,questionnaire_id,video_type):
-    file_name = "["+uuid+"]"+file.filename
-    file.save(os.path.join(UPLOAD_FOLDER, file_name))    
+def save_file(file,questionnaire_id,video_type,filename):
+    file.save(os.path.join(UPLOAD_FOLDER, filename))    
 
-    sql_insert_blob_query = " INSERT INTO videos (id, questionnaire_id, video_name, video_type, file) VALUES (%s,%s,%s,%s,%s)"
-    insert_blob_tuple = (video_uuid, questionnaire_id, file_name, video_type, file)
+    sql_insert_blob_query = " INSERT INTO videos (id, video_name, questionnaire_id, video_type_is_webcam) VALUES (%s,%s,%s,%s)"
+    insert_blob_tuple = (video_uuid, filename, questionnaire_id, video_type)
     result = cursor.execute(sql_insert_blob_query, insert_blob_tuple)
     mydb.commit()
     return result
