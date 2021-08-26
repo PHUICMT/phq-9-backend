@@ -1,9 +1,16 @@
 import json
-from save import save_file, save_questionnaire_to_database, save_result_to_database
+from save import save_file, save_questionnaire_to_database, save_result_to_database, save_result_fontend
 from emotion_recognition import run_predict
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
+
+@app.route('/result', methods=['POST'])
+def get_result():
+    uuid = request.form.get("uuid", False)
+    result = request.json['answer']
+    event = request.json['event']
+    save_result_fontend(uuid, result, event)
 
 @app.route('/upload-recorded-webcam', methods=['POST'])
 def upload_webcam_file():
