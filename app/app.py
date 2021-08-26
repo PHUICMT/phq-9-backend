@@ -18,10 +18,13 @@ def upload_webcam_file():
     uploaded_file = request.files['blob']
     uuid = request.form.get("uuid", False)
     filename = "["+uuid+"]"+'webcam.webm'
+    
     save_file(uploaded_file, uuid, True, filename)
+
     result = run_predict('./app/video_storage/'+filename)
     result_json = json.dumps(result)
     save_result_to_database(uuid,result_json)
+
     return jsonify({"result": result}), 200
 
 @app.route('/upload-recorded-screen', methods=['POST'])
