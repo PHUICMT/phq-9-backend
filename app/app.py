@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 global predictions_result
 
+
 @app.route('/result', methods=['POST'])
 def get_result():
     uuid = request.json['uuid']
@@ -26,10 +27,10 @@ def upload_webcam_file():
 
     save_file(uploaded_file, uuid, True, filename)
 
-    result = run_predict('./app/video_storage/'+filename)
-    predictions_result = json.dumps(result)
-    save_backend_result_to_database(uuid,predictions_result)
-    return jsonify({"result webcam": result}), 200
+    total_emotion, total_emotion_time = run_predict('./app/video_storage/'+filename)
+    predictions_result = json.dumps(total_emotion)
+    save_backend_result_to_database(uuid, predictions_result)
+    return jsonify({"total_emotion": total_emotion, "total_emotion_time": total_emotion_time}), 200
 
 
 @app.route('/upload-recorded-screen', methods=['POST'])

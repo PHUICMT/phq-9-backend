@@ -10,13 +10,22 @@ import numpy as np
 def run_predict(video_path):
 
     total_emotion = {
-        "angry": [0, []],
-        "disgust": [0, []],
-        "scared": [0, []],
-        "happy": [0, []],
-        "sad": [0, []],
-        "surprised": [0, []],
-        "neutral": [0, []]
+        "angry": [0],
+        "disgust": [0],
+        "scared": [0],
+        "happy": [0],
+        "sad": [0],
+        "surprised": [0],
+        "neutral": [0]
+    }
+    total_emotion_time = {
+        "angry": [],
+        "disgust": [],
+        "scared": [],
+        "happy": [],
+        "sad": [],
+        "surprised": [],
+        "neutral": []
     }
 
     detection_model_path = './app/haarcascade_files/haarcascade_frontalface_default.xml'
@@ -48,11 +57,11 @@ def run_predict(video_path):
 
                 preds = emotion_classifier.predict(roi)[0]
                 label = EMOTIONS[preds.argmax()]
-                total_emotion[label][0] += 1
-                total_emotion[label][1].append(datetime.now())
+                total_emotion[label] += 1
+                total_emotion_time[label].append(datetime.now())
         else:
             break
 
     camera.release()
     cv2.destroyAllWindows()
-    return total_emotion
+    return (total_emotion, total_emotion_time)
