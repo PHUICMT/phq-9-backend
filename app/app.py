@@ -20,17 +20,16 @@ def get_result():
 
 @app.route('/upload-recorded-webcam', methods=['POST'])
 def upload_webcam_file():
-    result = {}
     uploaded_file = request.files['blob']
     uuid = request.form.get("uuid", False)
     filename = "["+uuid+"]"+'webcam.webm'
 
     save_file(uploaded_file, uuid, True, filename)
 
-    total_emotion, total_emotion_time = run_predict('./app/video_storage/'+filename)
+    total_emotion, total_emotion_time,start_end_time = run_predict('./app/video_storage/'+filename)
     predictions_result = json.dumps(total_emotion)
     save_backend_result_to_database(uuid, predictions_result)
-    return jsonify({"total_emotion": total_emotion, "total_emotion_time": total_emotion_time}), 200
+    return jsonify({"total_emotion": total_emotion, "total_emotion_time": total_emotion_time,"start_end_time":start_end_time}), 200
 
 
 @app.route('/upload-recorded-screen', methods=['POST'])

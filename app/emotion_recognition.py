@@ -1,6 +1,6 @@
 
 from keras.preprocessing.image import img_to_array
-from datetime import datetime
+import time
 import imutils
 import cv2
 from keras.models import load_model
@@ -8,15 +8,15 @@ import numpy as np
 
 
 def run_predict(video_path):
-
+    start_end_time = []
     total_emotion = {
-        "angry": [0],
-        "disgust": [0],
-        "scared": [0],
-        "happy": [0],
-        "sad": [0],
-        "surprised": [0],
-        "neutral": [0]
+        "angry": 0,
+        "disgust": 0,
+        "scared": 0,
+        "happy": 0,
+        "sad": 0,
+        "surprised": 0,
+        "neutral": 0
     }
     total_emotion_time = {
         "angry": [],
@@ -37,6 +37,7 @@ def run_predict(video_path):
                 "happy", "sad", "surprised", "neutral"]
 
     camera = cv2.VideoCapture(video_path)
+    start_end_time.append(get_timestamp())
     while(camera.isOpened()):
         ret, frame = camera.read()
         if ret == True:
@@ -58,10 +59,15 @@ def run_predict(video_path):
                 preds = emotion_classifier.predict(roi)[0]
                 label = EMOTIONS[preds.argmax()]
                 total_emotion[label] += 1
-                total_emotion_time[label].append(datetime.now())
+                total_emotion_time[label].append(get_timestamp())
         else:
             break
 
     camera.release()
     cv2.destroyAllWindows()
-    return (total_emotion, total_emotion_time)
+    start_end_time.append(get_timestamp())
+    return (total_emotion, total_emotion_time,start_end_time)
+
+def get_timestamp():
+    milli_sec = int(round(time.time() * 1000))
+    return milli_sec
