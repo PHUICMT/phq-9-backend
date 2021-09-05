@@ -37,7 +37,8 @@ def run_predict(video_path):
                 "happy", "sad", "surprised", "neutral"]
 
     camera = cv2.VideoCapture(video_path)
-    start_end_time.append(get_timestamp())
+
+    start_end_time.append(camera.get(cv2.CAP_PROP_POS_MSEC))
     while(camera.isOpened()):
         ret, frame = camera.read()
         if ret == True:
@@ -59,14 +60,16 @@ def run_predict(video_path):
                 preds = emotion_classifier.predict(roi)[0]
                 label = EMOTIONS[preds.argmax()]
                 total_emotion[label] += 1
-                total_emotion_time[label].append(get_timestamp())
+                nowTime = camera.get(cv2.CAP_PROP_POS_MSEC)
+                total_emotion_time[label].append(nowTime)
+                if(nowTime != 0):
+                    start_end_time.append(nowTime)       
         else:
             break
 
     camera.release()
     cv2.destroyAllWindows()
-    start_end_time.append(get_timestamp())
-    return (total_emotion, total_emotion_time,start_end_time)
+    return (total_emotion, total_emotion_time, start_end_time)
 
 def get_timestamp():
     milli_sec = int(round(time.time() * 1000))
