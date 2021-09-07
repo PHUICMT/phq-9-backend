@@ -1,5 +1,5 @@
 import json
-from save import save_file, save_questionnaire_to_database, save_backend_result_to_database, save_fontend_result_to_database
+from save import save_file, save_questionnaire_to_database, save_backend_result_to_database, save_fontend_result_to_database , questionnaire_count
 from emotion_recognition import run_predict
 from flask import Flask, request, jsonify
 
@@ -48,7 +48,8 @@ def upload_questionnaire():
     uuid = uuid_json["uuid"]
 
     save_questionnaire_to_database(uuid)
-    return jsonify({"response questionnaire": uuid}), 200
+    questionnaire_row = questionnaire_count()
+    return jsonify({"questionnaire": questionnaire_row}), 200
 
 
 if __name__ == '__main__':

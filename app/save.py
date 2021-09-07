@@ -48,3 +48,8 @@ def save_fontend_result_to_database(answer, events, questionnaire_id):
     result = cursor.execute(sql_insert_query, insert_tuple)
     mydb.commit()
     return result
+
+def questionnaire_count():
+    cursor.execute("SELECT COUNT(*) FROM Questionnaire")
+    property_count = cursor.fetchone()[0]
+    return property_count
