@@ -4,6 +4,7 @@ from datetime import datetime
 import mysql.connector
 
 UPLOAD_FOLDER = './app/video_storage'
+UPLOAD_IMAGES = './app/images/results'
 video_uuid = str(uuid.uuid4())
 mydb = mysql.connector.connect(
     host="db",
@@ -17,13 +18,18 @@ now = datetime.now()
 current_time = now.strftime('%Y-%m-%d %H:%M:%S')
 
 
-def save_file(file, questionnaire_id, video_type, filename):
+def save_video(file, questionnaire_id, video_type, filename):
     file.save(os.path.join(UPLOAD_FOLDER, filename))
     sql_insert_blob_query = " INSERT INTO Videos (id, video_name, questionnaire_id, video_type_is_webcam) VALUES (%s,%s,%s,%s)"
     insert_blob_tuple = (video_uuid, filename, questionnaire_id, video_type)
     result = cursor.execute(sql_insert_blob_query, insert_blob_tuple)
     mydb.commit()
     return result
+
+
+def save_image(file, filename):
+    file.save(os.path.join(UPLOAD_IMAGES, filename))
+    return 'Image saved.'
 
 
 def save_questionnaire_to_database(questionnaire_id):
@@ -48,6 +54,7 @@ def save_fontend_result_to_database(answer, events, questionnaire_id):
     result = cursor.execute(sql_insert_query, insert_tuple)
     mydb.commit()
     return result
+
 
 def questionnaire_count():
     cursor.execute("SELECT COUNT(*) FROM Questionnaire")
