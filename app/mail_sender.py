@@ -4,7 +4,7 @@ from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 
 
-def send_email(image_name, body, to_email):
+def send_email(image_name, to_email):
     from_email = 'phq.9.thesis@gmail.com'
 
     msg = MIMEMultipart("alternative")
@@ -12,13 +12,7 @@ def send_email(image_name, body, to_email):
     msg['From'] = from_email
     msg['To'] = to_email
 
-    html = """\
-        <html>
-        <body>
-        <img src="cid:result_image">
-        </body>
-        </html>
-        """
+    html = html_body_function()
     html_body = MIMEText(html, 'html')
 
     result_pic = open('/images/results/' + image_name, 'rb')
@@ -54,7 +48,7 @@ def send_email(image_name, body, to_email):
     s.quit()
 
 
-def html_body():
+def html_body_function():
     return """\
         <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
         <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
