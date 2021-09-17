@@ -8,7 +8,7 @@ def send_email(image_name, to_email):
     from_email = 'phq.9.thesis@gmail.com'
 
     msg = MIMEMultipart("alternative")
-    msg['Subject'] = 'Test mail sender'
+    msg['Subject'] = 'PHQ-9 Result'
     msg['From'] = from_email
     msg['To'] = to_email
 
@@ -68,6 +68,7 @@ def html_body_function():
         <title></title>
         
             <style type="text/css">
+            @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@200;300&display=swap');
             table, td { color: #000000; } a { color: #0000ee; text-decoration: underline; } @media (max-width: 480px) { #u_content_heading_5 .v-container-padding-padding { padding: 15px 10px 10px !important; } #u_content_heading_5 .v-font-size { font-size: 35px !important; } #u_content_heading_1 .v-container-padding-padding { padding: 15px 10px 10px !important; } #u_content_heading_1 .v-font-size { font-size: 35px !important; } #u_content_heading_6 .v-container-padding-padding { padding: 15px 10px 10px !important; } #u_content_heading_6 .v-font-size { font-size: 35px !important; } }
         @media only screen and (min-width: 570px) {
         .u-row {
@@ -105,6 +106,7 @@ def html_body_function():
         }
         }
         body {
+        font-family: 'Prompt';
         margin: 0;
         padding: 0;
         }
