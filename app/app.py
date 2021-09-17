@@ -55,7 +55,7 @@ def upload_questionnaire():
 
 
 @app.route('/upload-image', methods=['POST'])
-def send_mail():
+def upload_image():
     uuid = request.json['uuid']
     result_image = request.files['result_image']
 
