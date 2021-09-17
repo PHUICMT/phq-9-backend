@@ -42,7 +42,7 @@ def send_email(image_name, to_email):
     msg.attach(image_2_image)
     msg.attach(image_3_image)
 
-    s = smtplib.SMTP("mail", 25)
+    s = smtplib.SMTP("smtp", 25)
     s.ehlo()
     s.sendmail(from_addr=from_email, to_addrs=to_email, msg=msg.as_string())
     s.quit()
