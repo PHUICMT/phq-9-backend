@@ -56,7 +56,7 @@ def upload_questionnaire():
 
 @app.route('/upload-image', methods=['POST'])
 def upload_image():
-    uuid = request.json['uuid']
+    uuid = request.form.get("uuid", False)
     result_image = request.files['result_image']
 
     filename = uuid + '.png'
