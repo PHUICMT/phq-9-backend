@@ -68,12 +68,12 @@ def upload_image():
 @app.route('/send-mail', methods=['POST'])
 def send_mail():
     uuid = request.json['uuid']
-    to_mail = request.json['to_mail']
+    to_mail = request.json['to_email']
 
     filename = uuid + '.png'
     send_email(filename, to_mail)
 
-    return jsonify({"image": filename, "uuid": uuid, "to_mail": to_mail}), 200
+    return jsonify({"image": filename, "uuid": uuid, "to_email": to_mail}), 200
 
 
 if __name__ == '__main__':

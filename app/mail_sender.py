@@ -15,19 +15,19 @@ def send_email(image_name, to_email):
     html = html_body_function()
     html_body = MIMEText(html, 'html')
 
-    result_pic = open('/images/results/' + image_name, 'rb')
+    result_pic = open('./app/images/results/' + image_name, 'rb')
     result_image = MIMEImage(result_pic.read())
     result_pic.close()
 
-    image_1_pic = open('/images/components/image-1.png', 'rb')
+    image_1_pic = open('./app/images/components/image-1.png', 'rb')
     image_1_image = MIMEImage(image_1_pic.read())
     image_1_pic.close()
 
-    image_2_pic = open('/images/components/image-2.png', 'rb')
+    image_2_pic = open('./app/images/components/image-2.png', 'rb')
     image_2_image = MIMEImage(image_2_pic.read())
     image_2_pic.close()
 
-    image_3_pic = open('/images/components/image-1.png', 'rb')
+    image_3_pic = open('./app/images/components/image-1.png', 'rb')
     image_3_image = MIMEImage(image_3_pic.read())
     image_3_pic.close()
 
