@@ -24,7 +24,7 @@ def save_video(file, questionnaire_id, video_type, filename):
     insert_blob_tuple = (video_uuid, filename, questionnaire_id, video_type)
     result = cursor.execute(sql_insert_blob_query, insert_blob_tuple)
     mydb.commit()
-    return result
+    return video_type + ' Saved! and Save to Database ' + result
 
 
 def save_image(file, filename):
