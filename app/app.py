@@ -28,6 +28,16 @@ def upload_webcam_file():
     return jsonify({"save_video": save_video_result})
 
 
+@app.route('/upload-recorded-screen', methods=['POST'])
+def upload_screen_file():
+    uploaded_file = request.files['blob']
+    uuid = request.form.get("uuid", False)
+    filename = "["+uuid+"]"+'screen.webm'
+
+    save_video(uploaded_file, uuid, False, filename)
+    return jsonify({"response screen": uuid}), 200
+
+
 @app.route('/process-video', methods=['POST'])
 def process_webcam():
     uuid = request.json['uuid']
@@ -37,16 +47,6 @@ def process_webcam():
     predictions_result = json.dumps(total_emotion)
     save_backend_result_to_database(uuid, predictions_result)
     return jsonify({"total_emotion": total_emotion, "total_emotion_time": total_emotion_time, "start_end_time": start_end_time}), 200
-
-
-@app.route('/upload-recorded-screen', methods=['POST'])
-def upload_screen_file():
-    uploaded_file = request.files['blob']
-    uuid = request.form.get("uuid", False)
-    filename = "["+uuid+"]"+'screen.webm'
-
-    save_video(uploaded_file, uuid, False, filename)
-    return jsonify({"response screen": uuid}), 200
 
 
 @app.route('/questionnaire', methods=['POST'])
@@ -59,26 +59,38 @@ def upload_questionnaire():
     return jsonify({"questionnaire": questionnaire_row}), 200
 
 
-@app.route('/upload-image', methods=['POST'])
-def upload_image():
-    uuid = request.form.get("uuid", False)
-    result_image = request.files['result_image']
-
-    filename = uuid + '.png'
-    save_image(result_image, filename)
-
-    return jsonify({"image_saved": filename, "uuid": uuid}), 200
-
-
 @app.route('/send-mail', methods=['POST'])
 def send_mail():
     uuid = request.json['uuid']
     to_mail = request.json['to_email']
+    stringEmote = request.json['stringEmote']
+    stringClickTime = request.json['stringClickTime']
+    stringReactionTime = request.json['stringReactionTime']
+    stringBehavior = request.json['stringBehavior']
+    setingGroupsTest = request.json['setingGroupsTest']
 
-    filename = uuid + '.png'
-    send_email(filename, to_mail)
+    result = jsonify({
+        "uuid": uuid,
+        "stringEmote": stringEmote,
+        "stringClickTime": stringClickTime,
+        "stringReactionTime": stringReactionTime,
+        "stringBehavior": stringBehavior,
+        "setingGroupsTest": setingGroupsTest
+    })
 
-    return jsonify({"image": filename, "uuid": uuid, "to_email": to_mail}), 200
+    send_email(result, to_mail)
+
+    return jsonify({"uuid": uuid, "to_email": to_mail}), 200
+
+# @app.route('/upload-image', methods=['POST'])
+# def upload_image():
+#     uuid = request.form.get("uuid", False)
+#     result_image = request.files['result_image']
+
+#     filename = uuid + '.png'
+#     save_image(result_image, filename)
+
+#     return jsonify({"image_saved": filename, "uuid": uuid}), 200
 
 
 if __name__ == '__main__':
