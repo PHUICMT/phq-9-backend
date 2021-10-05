@@ -48,10 +48,10 @@ def select_to_process():
 
 
 @app.route('/process-video', methods=['POST'])
-async def process_webcam():
+def process_webcam():
     uuid = request.json['uuid']
     filename = "["+uuid+"]"+'webcam.webm'
-    total_emotion, total_emotion_time, start_end_time = await run_predict(
+    total_emotion, total_emotion_time, start_end_time = run_predict(
         './app/video_storage/'+filename)
     predictions_result = json.dumps(total_emotion)
     save_backend_result_to_database(uuid, predictions_result)
