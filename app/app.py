@@ -1,4 +1,6 @@
 import json
+import requests
+
 from save import save_image, save_video, save_questionnaire_to_database, save_backend_result_to_database, save_fontend_result_to_database, questionnaire_count
 from emotion_recognition import run_predict
 from mail_sender import send_email
@@ -38,11 +40,18 @@ def upload_screen_file():
     return jsonify({"response screen": uuid}), 200
 
 
+@app.route('/select-to-process', methods=['POST'])
+def select_to_process():
+    requests.post('http://mailsender:5001/node-select-to-process',
+                  json=request.get_json())
+    return jsonify({"response": "Sended to node-select-to-process"}), 200
+
+
 @app.route('/process-video', methods=['POST'])
-def process_webcam():
+async def process_webcam():
     uuid = request.json['uuid']
     filename = "["+uuid+"]"+'webcam.webm'
-    total_emotion, total_emotion_time, start_end_time = run_predict(
+    total_emotion, total_emotion_time, start_end_time = await run_predict(
         './app/video_storage/'+filename)
     predictions_result = json.dumps(total_emotion)
     save_backend_result_to_database(uuid, predictions_result)
