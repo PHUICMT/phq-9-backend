@@ -1,5 +1,7 @@
+from functools import cache
 import json
 import requests
+import pika
 
 from save import save_image, save_video, save_questionnaire_to_database, save_backend_result_to_database, save_fontend_result_to_database, questionnaire_count
 from emotion_recognition import run_predict
@@ -7,6 +9,13 @@ from mail_sender import send_email
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
+credentials = pika.PlainCredentials('admin', 'admin')
+parameters = pika.ConnectionParameters(
+    host='rabbitmq', port='5672', heartbeat=0, credentials=credentials)
+connection = pika.BlockingConnection(parameters)
+# pika.URLParameters("amqp://admin:admin@rabbitmq:5672")
+channel = connection.channel()
+
 
 global predictions_result
 
@@ -49,16 +58,30 @@ def select_to_process():
 
 @app.route('/process-video', methods=['POST'])
 def process_webcam():
+    all_json = request.get_json()
     uuid = request.json['uuid']
     filename = "["+uuid+"]"+'webcam.webm'
     total_emotion, total_emotion_time, start_end_time = run_predict(
         './app/video_storage/'+filename)
     predictions_result = json.dumps(total_emotion)
     save_backend_result_to_database(uuid, predictions_result)
-    return jsonify({"total_emotion": total_emotion, "total_emotion_time": total_emotion_time, "start_end_time": start_end_time}), 200
+    channel.queue_declare(queue='dataFromBackend', durable=True)
+    message = json.dumps({
+        "predictions_result": predictions_result,
+        "total_emotion_time": total_emotion_time,
+        "start_end_time": start_end_time,
+        "all_json": all_json
+    })
+    channel.basic_publish(
+        exchange='',
+        routing_key='dataFromBackend',
+        body=message
+    )
+
+    return jsonify({"response": "RabbitMQ Accepted!"}), 200
 
 
-@app.route('/questionnaire', methods=['POST'])
+@ app.route('/questionnaire', methods=['POST'])
 def upload_questionnaire():
     uuid_json = request.json
     uuid = uuid_json["uuid"]
@@ -68,7 +91,7 @@ def upload_questionnaire():
     return jsonify({"questionnaire": questionnaire_row}), 200
 
 
-@app.route('/send-mail', methods=['POST'])
+@ app.route('/send-mail', methods=['POST'])
 def send_mail():
     uuid = request.json['uuid']
     to_mail = request.json['to_email']
@@ -76,18 +99,18 @@ def send_mail():
     stringClickTime = request.json['stringClickTime']
     stringReactionTime = request.json['stringReactionTime']
     stringBehavior = request.json['stringBehavior']
-    setingGroupsTest = request.json['setingGroupsTest']
+    stringGroupsTest = request.json['stringGroupsTest']
 
-    result = jsonify({
+    results = json.dumps({
         "uuid": uuid,
         "stringEmote": stringEmote,
         "stringClickTime": stringClickTime,
         "stringReactionTime": stringReactionTime,
         "stringBehavior": stringBehavior,
-        "setingGroupsTest": setingGroupsTest
+        "stringGroupsTest": stringGroupsTest
     })
 
-    send_email(result, to_mail)
+    send_email(results, to_mail)
 
     return jsonify({"uuid": uuid, "to_email": to_mail}), 200
 
