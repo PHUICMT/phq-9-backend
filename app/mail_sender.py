@@ -17,8 +17,8 @@ def send_email(results, to_email):
         result["stringEmote"] + '\n' + \
         '--ClickTime--' + '\n' + \
         result["stringClickTime"] + '\n' + \
-        '--TotalTime--' + '\n' + \
-        result["reactionTime"] + '\n' + \
+        '--TotalTimePerItem--' + '\n' + \
+        result["stringReactionTime"] + '\n' + \
         '--Behavior--' + '\n' + \
         result["stringBehavior"] + '\n' + \
         '--GroupsTest--' + '\n' + \
