@@ -24,7 +24,7 @@ def send_email(results, to_email):
         '--GroupsTest--' + '\n' + \
         result["stringGroupsTest"] + '\n' \
         '--Result of test--' + '\n' + \
-        result["stringRestlt"] + '\n' \
+        result["stringResult"] + '\n' \
         '--Info of test--' + '\n' + \
         result["stringInfo"] + '\n'
 
