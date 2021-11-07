@@ -13,7 +13,6 @@ credentials = pika.PlainCredentials('admin', 'admin')
 parameters = pika.ConnectionParameters(
     host='rabbitmq', port='5672', heartbeat=0, credentials=credentials)
 connection = pika.BlockingConnection(parameters)
-# pika.URLParameters("amqp://admin:admin@rabbitmq:5672")
 channel = connection.channel()
 
 
@@ -100,6 +99,8 @@ def send_mail():
     stringReactionTime = request.json['stringReactionTime']
     stringBehavior = request.json['stringBehavior']
     stringGroupsTest = request.json['stringGroupsTest']
+    stringResult = request.json['stringResult']
+    stringInfo = request.json['stringInfo']
 
     results = json.dumps({
         "uuid": uuid,
@@ -107,7 +108,9 @@ def send_mail():
         "stringClickTime": stringClickTime,
         "stringReactionTime": stringReactionTime,
         "stringBehavior": stringBehavior,
-        "stringGroupsTest": stringGroupsTest
+        "stringGroupsTest": stringGroupsTest,
+        "stringResult": stringResult,
+        "stringInfo": stringInfo
     })
 
     send_email(results, to_mail)

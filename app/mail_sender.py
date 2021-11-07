@@ -22,7 +22,11 @@ def send_email(results, to_email):
         '--Behavior--' + '\n' + \
         result["stringBehavior"] + '\n' + \
         '--GroupsTest--' + '\n' + \
-        result["stringGroupsTest"] + '\n'
+        result["stringGroupsTest"] + '\n' \
+        '--Result of test--' + '\n' + \
+        result["stringRestlt"] + '\n' \
+        '--Info of test--' + '\n' + \
+        result["stringInfo"] + '\n'
 
     text_message = MIMEText(text, "plain")
     msg.attach(text_message)
